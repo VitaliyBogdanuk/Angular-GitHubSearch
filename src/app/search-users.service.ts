@@ -7,9 +7,17 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class SearchUsersService {
 
+    private allUsers = "https://api.github.com/users";
     private searchUsersEndPoint = "https://api.github.com/search/users?q=";
     private getUserDetailsEndPoint = "https://api.github.com/users/";
     constructor(private http: Http) { }
+
+    getAllUsers() {
+        let url = `${this.allUsers}`;
+        return this.http.get(url)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
 
     getUsersByPlaceAndLanguage(place: string, language: string) {
         let url;

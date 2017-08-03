@@ -11,12 +11,24 @@ export class SearchUsersComponent implements OnInit {
     language: string;
 
     results: any[] = []; // This will hold the data coming from the service
+    allResults: any[] = [];
     selected: boolean = false; // Flag to check if a user is clicked or not
     selectedUser: any; // presently Selected user details
     error_text: string = ""; // So called error reporing text to the end user
 
     constructor(private searchService: SearchUsersService) {}
-    ngOnInit() {}
+    ngOnInit() {
+        this.searchService.getAllUsers().subscribe(
+            users => {
+                this.allResults = users;
+            },
+            error => {
+                this.allResults = [];
+                this.error_text = "Sorry! No Users found. Try again";
+                console.error(error);
+            }
+        )
+    }
 
     search(place: string, language: string) {
         this.selected = false;
