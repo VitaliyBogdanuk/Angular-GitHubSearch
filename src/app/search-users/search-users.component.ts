@@ -7,6 +7,7 @@ import { SearchUsersService } from '../search-users.service';
   styleUrls: ['./search-users.component.css']
 })
 export class SearchUsersComponent implements OnInit {
+    name: string;
     place: string;
     language: string;
 
@@ -18,6 +19,8 @@ export class SearchUsersComponent implements OnInit {
 
     constructor(private searchService: SearchUsersService) {}
     ngOnInit() {
+        this.selected = false;
+        this.error_text = "";
         this.searchService.getAllUsers().subscribe(
             users => {
                 this.allResults = users;
@@ -49,10 +52,28 @@ export class SearchUsersComponent implements OnInit {
         }
     }
 
+    searchUser(name: string) {
+        this.selected = false;
+        this.error_text = "";
+        if (name) {
+            this.name = name;
+            this.searchService.getUserByLogin(name).subscribe(
+                users => {
+                    this.allResults = users;
+                },
+                error => {
+                    this.results = [];
+                    this.error_text = "Sorry! No Users found. Try again";
+                    console.error(error);
+                }
+            )
+        }
+    }
+
     getDetails(username: string) {
         this.searchService.getDetailsByUserName(username).subscribe(
-            userDatils => {
-                this.selectedUser = userDatils;
+            userDetails => {
+                this.selectedUser = userDetails;
                 this.selected = true;
             },
             error => {

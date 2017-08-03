@@ -19,6 +19,17 @@ export class SearchUsersService {
             .catch(this.handleError);
     }
 
+    getUserByLogin(name: string) {
+        let url;
+        if(name) {
+            url = `${this.searchUsersEndPoint}${name}in:login`;
+        }
+
+        return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     getUsersByPlaceAndLanguage(place: string, language: string) {
         let url;
         if (place && !language) {

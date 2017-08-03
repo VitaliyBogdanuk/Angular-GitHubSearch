@@ -38,3 +38,11 @@
 table tr > td {
     vertical-align: middle;
 }
+
+table > img {
+    border: 1px solid #9b59b6;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th {
+    border-top: 1px solid #9b59b6;
+}
