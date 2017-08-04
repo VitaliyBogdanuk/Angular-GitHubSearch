@@ -6,11 +6,13 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { SearchUsersComponent } from './search-users/search-users.component';
 import { SearchUsersService } from './search-users.service';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchUsersComponent
+    SearchUsersComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -18,6 +20,6 @@ import { SearchUsersService } from './search-users.service';
     HttpModule
   ],
   providers: [ SearchUsersService ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent, UserInfoComponent ]
 })
 export class AppModule { }
