@@ -12,6 +12,13 @@ export class SearchUsersService {
     private getUserDetailsEndPoint = "https://api.github.com/users/";
     constructor(private http: Http) { }
 
+    getUserRepos(login: string) {
+        let url = `${this.getUserDetailsEndPoint}${login}/repos`;
+        return this.http.get(url)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
     getAllUsers() {
         let url = `${this.allUsers}`;
         return this.http.get(url)

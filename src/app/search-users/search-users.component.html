@@ -37,7 +37,7 @@
     <!--</div>-->
     <!--</div>-->
     <!--</div>-->
-    <div *ngIf="allResults.length && selected" class="col-md-offset-4 col-md-4">
+    <div *ngIf="allResults.length && selected" [ngClass]="{'col-md-offset-1 col-md-5': selectedRepos, 'col-md-offset-4 col-md-4': !selectedRepos}">
       <br>
       <div class="box text-center">
         <img src="{{selectedUser.avatar_url}}" class="img-responsive img-circle">
@@ -52,7 +52,7 @@
           <hr>
           <div *ngIf="selectedUser.updated_at">Last Seen: {{ selectedUser.updated_at | date }}</div>
           <hr>
-          <div *ngIf="selectedUser.public_repos">Repos: {{ selectedUser.public_repos }}</div>
+          <div *ngIf="selectedUser.public_repos"><button class="btn btn-success" (click)="getRepos(selectedUser.login);">Repos: {{ selectedUser.public_repos }}</button></div>
           <hr>
           <div *ngIf="selectedUser.public_gists">Gists: {{ selectedUser.public_gists }}</div>
           <hr>
@@ -64,11 +64,30 @@
         </div>
       </div>
     </div>
+    <div *ngIf="repos.length && selectedRepos" [ngClass]="{'col-md-5': selected && selectedRepos }">
+      <br>
+      <div class="box text-center">
+        <div class="details">
+          <button class="btn btn-sm btn-warning" style="float: left;" (click)="!selected = selected">Show user info</button>
+          <button class="btn btn-sm btn-warning pull-right" (click)="selectedRepos = !selectedRepos">Close</button>
+          <table class="table table-hover" width="100%">
+            <tr>
+              <th class="text-center">Name</th>
+              <th class="text-center">Description</th>
+            </tr>
+            <tr *ngFor="let repo of repos" (click)="modal">
+              <td style="text-align: left; border-right: 1px solid #9b59b6">{{ repo.name }}</td>
+              <td style="text-align: left;">{{ repo.description }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="row">
     <br>
-    <table class="table table-hover">
+    <table *ngIf="allResults.length && !selected" class="table table-hover">
       <tr>
         <th class="text-center">Image</th>
         <th class="text-center">Login</th>

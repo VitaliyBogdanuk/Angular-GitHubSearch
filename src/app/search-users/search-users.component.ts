@@ -10,10 +10,13 @@ export class SearchUsersComponent implements OnInit {
     name: string;
     place: string;
     language: string;
+    login: string;
 
     results: any[] = []; // This will hold the data coming from the service
     allResults: any[] = [];
+    repos: any[] = [];
     selected: boolean = false; // Flag to check if a user is clicked or not
+    selectedRepos: boolean = false; // Flag to check if a user is clicked or not
     selectedUser: any; // presently Selected user details
     error_text: string = ""; // So called error reporing text to the end user
 
@@ -78,6 +81,19 @@ export class SearchUsersComponent implements OnInit {
             },
             error => {
                 this.selected = false;
+                console.error(error);
+            }
+        )
+    }
+
+    getRepos(login: string) {
+        this.searchService.getUserRepos(login).subscribe(
+            userRepos => {
+                this.repos = userRepos;
+                this.selectedRepos = true;
+            },
+            error => {
+                this.selectedRepos = false;
                 console.error(error);
             }
         )

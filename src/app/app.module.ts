@@ -20,6 +20,6 @@ import { UserInfoComponent } from './user-info/user-info.component';
     HttpModule
   ],
   providers: [ SearchUsersService ],
-  bootstrap: [ AppComponent, UserInfoComponent ]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
